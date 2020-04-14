@@ -1,10 +1,10 @@
-package edu.miu.cs523.reviewsproducer;
+package edu.miu.cs523.neows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReviewsProducerApplicationTests {
+class NeoWsDataProducerApplicationTests {
 
 	@Test
 	void contextLoads() {
