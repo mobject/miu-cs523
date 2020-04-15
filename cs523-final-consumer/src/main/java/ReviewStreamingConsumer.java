@@ -61,7 +61,6 @@ public class ReviewStreamingConsumer {
             List<Tuple2<String, NeoWSData>> collect = stringStringJavaPairRDD.collect();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             collect.forEach(stringStringTuple2 -> {
-//                String rowKey = new StringBuilder().append(TABLE_NAME).append(":").append(LocalDateTime.now().toString()).toString();
                 NeoWSData neoWSData = stringStringTuple2._2;
                 Map<String, Object> near_earth_objects = neoWSData.getNear_earth_objects();
                 String next = near_earth_objects.keySet().iterator().next();
@@ -101,14 +100,6 @@ public class ReviewStreamingConsumer {
         });
         streamingContext.start();
         streamingContext.awaitTermination();
-//        JavaReceiverInputDStream<String> localhost = streamingContext.socketTextStream("localhost", 9999,
-//                StorageLevel.MEMORY_AND_DISK());
-//        JavaDStream<String> stringJavaDStream = localhost.flatMap(s -> Arrays.asList(s.split(" ")).iterator());
-//        JavaPairDStream<String, Integer> stringIntegerJavaPairDStream = stringJavaDStream.mapToPair(s -> Tuple2.apply(s, 1));
-//        JavaPairDStream<String, Integer> stringIntegerJavaPairDStream1 = stringIntegerJavaPairDStream.reduceByKey(Integer::sum);
-//        stringIntegerJavaPairDStream1.print();
-//        streamingContext.start();
-//        streamingContext.awaitTermination();
     }
 
     private static byte[] doubleToByteArray ( final double i ){
