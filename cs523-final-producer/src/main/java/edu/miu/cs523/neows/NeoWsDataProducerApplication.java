@@ -26,7 +26,7 @@ public class NeoWsDataProducerApplication {
 
             NeoWSData neoWSData = neoWSDataService.fetchData(localDate);
             producer.sendMessage(neoWSData);
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             localDate = localDate.plusDays(1);
         }
 
@@ -60,8 +60,7 @@ public class NeoWsDataProducerApplication {
 
                 @Override
                 public void onSuccess(SendResult<Object, NeoWSData> result) {
-                    System.out.println("Sent message=[] with offset=[" + result.getRecordMetadata()
-                            .offset() + "]");
+                    System.out.println("Sent message=[] with offset=[" + result.getRecordMetadata() + "]");
                 }
 
                 @Override

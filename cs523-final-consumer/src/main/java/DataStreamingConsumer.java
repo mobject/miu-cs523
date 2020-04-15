@@ -19,20 +19,17 @@ import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
 import scala.Tuple2;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class ReviewStreamingConsumer {
+public class DataStreamingConsumer {
 
     public static final String TABLE_NAME = "NEOWS_DATA";
     public static final String kAFKA_TOPIC_NAME = "cs532";
 
     public static void main(String[] args) throws InterruptedException {
         SparkConf sparkConf = new SparkConf().setAppName("KafkaHBaseWordCount").setMaster("local");
-        JavaStreamingContext streamingContext = new JavaStreamingContext(sparkConf, Duration.apply(5000));
+        JavaStreamingContext streamingContext = new JavaStreamingContext(sparkConf, Duration.apply(1000));
 
         Map<String, Object> kafkaParams = new HashMap<>();
         kafkaParams.put("bootstrap.servers", "localhost:9092");
@@ -47,7 +44,7 @@ public class ReviewStreamingConsumer {
         JavaInputDStream<ConsumerRecord<String, NeoWSData>> stream =
                 KafkaUtils.createDirectStream(
                         streamingContext,
-                        LocationStrategies.PreferConsistent(),
+                        LocationStrategies.PreferBrokers(),
                         ConsumerStrategies.Subscribe(topics, kafkaParams)
                 );
 
@@ -59,7 +56,7 @@ public class ReviewStreamingConsumer {
             Table table = conn.getTable(TableName.valueOf(TABLE_NAME));
             // instantiate Put class
             List<Tuple2<String, NeoWSData>> collect = stringStringJavaPairRDD.collect();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             collect.forEach(stringStringTuple2 -> {
                 NeoWSData neoWSData = stringStringTuple2._2;
                 Map<String, Object> near_earth_objects = neoWSData.getNear_earth_objects();
