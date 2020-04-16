@@ -1,0 +1,18 @@
+HBASE DATA
+
+create 'NEOWS_DATA', 'info', 'size' ,'event'
+
+--pheonix table---
+
+CREATE TABLE IF NOT EXISTS NEOWS_DATA (id VARCHAR NOT NULL primary key, "info"."name" VARCHAR, "size"."estimated_diameter_meter" DOUBLE, "event"."kilometers_per_second" DOUBLE, "event"."missed_distance_miles" DOUBLE, "event"."close_approach_date" DATE );
+
+------ CONSUMER -----
+spark-submit --class DataStreamingConsumer --master spark data-consumer-0.0.1-SNAPSHOT.jar
+
+----PRODUCER---------
+java -jar data-producer-0.0.1-SNAPSHOT.
+
+
+
+
+http://localhost:4040/jobs/
